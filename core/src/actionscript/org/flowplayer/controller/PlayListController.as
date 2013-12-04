@@ -64,7 +64,7 @@ package org.flowplayer.controller {
 			PlayState.initStates(_playList, this, _providers, playerEventDispatcher, _config, _loader);
 		}
 
-		flow_internal function setPlaylist(clips:Array):void {
+		flow_internal function setPlaylist(clips:Vector.<Clip>):void {
             if (getState() != State.WAITING) {
                 close(false);
             }
@@ -85,7 +85,7 @@ package org.flowplayer.controller {
 		}
 
 		private function firstNonSplashClip():Number {
-			var clips:Array = _playList.clips;
+			var clips:Vector.<Clip> = _playList.clips;
 			for (var i:Number = 0; i < clips.length; i++) {
 				var clip:Clip = clips[i];
 				if (clip.type == ClipType.IMAGE && clip.duration > 0) {
@@ -106,7 +106,7 @@ package org.flowplayer.controller {
 			return 0;
 		}
 
-		flow_internal function playClips(clips:Array):void {
+		flow_internal function playClips(clips:Vector.<Clip>):void {
 			replacePlaylistAndPlay(clips);
 		}
 
@@ -333,7 +333,7 @@ package org.flowplayer.controller {
 			if (clips is Clip) {
 				_playList.replaceClips(clips as Clip);
 			} else {
-				_playList.replaceClips2(clips as Array);
+				_playList.replaceClips2(clips as Vector.<Clip>);
 			}
 			play();
 		}

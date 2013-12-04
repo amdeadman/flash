@@ -17,17 +17,16 @@
  */
 
 package org.flowplayer.model {
-    import flash.net.SharedObject;
-import flash.utils.Dictionary;
+    import flash.utils.Dictionary;
     import org.flowplayer.util.Assert;
 
     internal class TimedPlaylist {
         
-        private var _clips:Array;
+        private var _clips:Vector.<Clip>;
         private var _clipsByTime:Dictionary;
 
         public function TimedPlaylist() {
-            _clips = [];
+            _clips = new Vector.<Clip>();
             _clipsByTime = new Dictionary();
         }
 
@@ -52,7 +51,7 @@ import flash.utils.Dictionary;
             return _clips.length;
         }
 
-        public function get clips():Array {
+        public function get clips():Vector.<Clip> {
             return _clips.concat();
         }
 

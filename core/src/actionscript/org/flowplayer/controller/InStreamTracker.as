@@ -47,7 +47,7 @@ package org.flowplayer.controller {
                 reset();
             }
 
-            var children:Array = clip.playlist;
+            var children:Vector.<Clip> = clip.playlist;
             for (var i:int = 0; i < children.length; i++) {
                 var clip:Clip = children[i] as Clip;
                 log.debug("start(): child clip at " + clip.position + ": " + clip);

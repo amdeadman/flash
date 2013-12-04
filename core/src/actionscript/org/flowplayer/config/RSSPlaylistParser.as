@@ -22,12 +22,12 @@ package org.flowplayer.config {
         private var fp:Namespace = new Namespace("http://flowplayer.org/fprss/");
 
    
-        public function createClips(rawRSS:String, playlist:Playlist, commonClipObject:Object):Array {
+        public function createClips(rawRSS:String, playlist:Playlist, commonClipObject:Object):Vector.<Clip> {
             return parse(rawRSS, playlist, commonClipObject);
         }
 
-        public function parse(rawRSS:String, playlist:Playlist, commonClipObject:Object):Array {
-            var result:Array = [];
+        public function parse(rawRSS:String, playlist:Playlist, commonClipObject:Object):Vector.<Clip> {
+            var result:Vector.<Clip> = new Vector.<Clip>();
             if(! XMLUtil.isValidXML(rawRSS)) {
                 throw new Error("Feed does not contain valid XML.");
             }

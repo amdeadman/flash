@@ -24,7 +24,7 @@ package org.flowplayer.view {
     import flash.events.Event;
     import flash.events.ProgressEvent;
     import flash.utils.getDefinitionByName;
-    import flash.utils.*;
+    import flash.utils.getQualifiedClassName;
     import flash.display.StageDisplayState;
     
     import org.flowplayer.util.Arrange;

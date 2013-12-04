@@ -89,7 +89,7 @@ package org.flowplayer.config {
         }
 
         private function hasAudioClipsWithoutProvider(playlist:Playlist):Boolean {
-            var clips:Array = playlist.clips; 
+            var clips:Vector.<Clip> = playlist.clips;
             for (var i:int; i < clips.length; i++) {
                 var clip:Clip = clips[i] as Clip;
 
@@ -97,6 +97,7 @@ package org.flowplayer.config {
                     return ! clip.clipObject || ! clip.clipObject.hasOwnProperty("provider");
                 }
             }
+            clips = null;
             return false;
         }
 
@@ -127,7 +128,7 @@ package org.flowplayer.config {
         }
 
         private function createInStreamProviders(playlist:Playlist, loadables:Array):void {
-            var children:Array = playlist.childClips;
+            var children:Vector.<Clip> = playlist.childClips;
             for (var i:int = 0; i < children.length; i++) {
                 var clip:Clip = children[i];
                 if (clip.configuredProviderName != "http") {
@@ -138,6 +139,7 @@ package org.flowplayer.config {
                     }
                 }
             }
+            children = null;
         }
 
 		private function isObjectDisabled(name:String, confObjects:Object):Boolean {

@@ -48,8 +48,8 @@ package org.flowplayer.view {
         }
 
 
-        private function createResizers(clips:Array):void {
-			clips.forEach(function(clip:Clip, index:int, clips:Array):void {
+        private function createResizers(clips:Vector.<Clip>):void {
+			clips.forEach(function(clip:Clip, index:int, clips:Vector.<Clip>):void {
 				log.debug("creating resizer for clip " + clip);
 				resizers[clip] = new MediaResizer(clip, screen.width, screen.height);
 			});

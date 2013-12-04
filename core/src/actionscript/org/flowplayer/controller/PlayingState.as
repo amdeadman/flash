@@ -43,7 +43,7 @@ package org.flowplayer.controller {
         }
 
         private function hasMidstreamClips(clip:Clip):Boolean {
-            var children:Array = clip.playlist;
+            var children:Vector.<Clip> = clip.playlist;
             if (children.length == 0) return false;
             for (var i:int = 0; i < children.length; i++) {
                 if (Clip(children[i]).isMidroll) {

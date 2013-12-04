@@ -28,7 +28,8 @@ package org.flowplayer.model {
 		private var _currentPos:Number;
         private var _inStreamClip:Clip;
 		private var _commonClip:Clip;
-		private var _clips:Array;
+	//	private var _clips:Array;
+       // private var _clips:Vector.<Clip>;
 
 		public function Playlist(commonClip:Clip = null) {
 			if (commonClip == null) {
@@ -37,18 +38,20 @@ package org.flowplayer.model {
 			super(commonClip);
 			_commonClip = commonClip;
 			_commonClip.setParentPlaylist(this);
-			initialize();		
+			initialize();
 		}
 		
-		private function initialize(newClips:Array = null):void {			
-			_clips = new Array();
+		private function initialize(newClips:Vector.<Clip> = null):void {
+            if (_clips) _clips.length = 0;
+
+			_clips = new Vector.<Clip>();
             _inStreamClip = null;
 			if (newClips) {
 				for (var i:Number = 0; i < newClips.length; i++) {
 					doAddClip(newClips[i]);
 				}
 			}
-			super.setClips(_clips);
+			//super.setClips(_clips);
 			_currentPos = 0;
             log.debug("initialized, current clip is " + current);
 		}
@@ -59,34 +62,36 @@ package org.flowplayer.model {
 		 * Discards all clips and adds the specified clip to the list.
 		 */
 		public function replaceClips(clip:Clip):void {
-			doReplace([clip]);
+			doReplace(new <Clip>[clip]);
 		}
 
 		/**
 		 * Discards all clips and addes the specified clips to the list.
 		 */
-		public function replaceClips2(clips:Array):void {
+		public function replaceClips2(clips:Vector.<Clip>):void {
 			doReplace(clips);
 		}
 
-		override flow_internal function setClips(clips:Array):void {
+		override flow_internal function setClips(clips:Vector.<Clip>):void {
 			for (var i:Number = 0; i < clips.length; i++) {
 				doAddClip(clips[i], -1, false);
 			}
-			super.setClips(_clips);
+			//super.setClips(_clips);
 		}
 		
-		private function doReplace(newClips:Array, silent:Boolean = false):void {
-            var oldClips:Array = _clips.concat([]);
+		private function doReplace(newClips:Vector.<Clip>, silent:Boolean = false):void {
+            var oldClips:Vector.<Clip> = _clips.concat();
 			initialize(newClips);
             if (! silent) {
                 dispatchPlaylistReplace(oldClips);
             }
+
+
 		}
 
-        flow_internal function dispatchPlaylistReplace(oldClips:Array = null):void {
+        flow_internal function dispatchPlaylistReplace(oldClips:Vector.<Clip> = null):void {
             log.debug("dispatchPlaylistReplace");
-            var oldClipsEventHelper:ClipEventSupport = new ClipEventSupport(_commonClip, oldClips || []);        
+            var oldClipsEventHelper:ClipEventSupport = new ClipEventSupport(_commonClip, oldClips);
             doDispatchEvent(new ClipEvent(ClipEventType.PLAYLIST_REPLACE, oldClipsEventHelper), true);        }
 
 
@@ -107,14 +112,14 @@ package org.flowplayer.model {
             if (current.isNullClip || current == commonClip) {
                 log.debug("replacing common/null clip");
                 // we only have the common clip or a common clip, perform a playlist replace!
-                doReplace([clip], true);
+                doReplace(new <Clip>[clip], true);
             } else {
                 doAddClip(clip, pos);
                 if (pos >= 0 && pos <= currentIndex && hasNext()) {
                     log.debug("addClip(), moving to next clip");
                     next();
                 }
-                super.setClips(_clips);
+                //super.setClips(_clips);
             }
             if (! silent) {
                 doDispatchEvent(new ClipEvent(ClipEventType.CLIP_ADD, pos >= 0 ? pos : clips.length - 1), true);
@@ -160,7 +165,7 @@ package org.flowplayer.model {
                 currentInPos = clips[pos];
                 _clips.splice(_clips.indexOf(currentInPos.preroll || currentInPos), 0, clip);
             }
-            var nested:Array = clip.playlist;
+            var nested:Vector.<Clip> = clip.playlist;
             for (var i:int = 0; i < nested.length; i++) {
                 var nestedClip:Clip = nested[i] as Clip;
                 addChildClip(nestedClip, pos, dispatchEvents);
@@ -268,7 +273,7 @@ package org.flowplayer.model {
 
 		public function toIndex(index:Number):Clip {
 			if (index < 0) return null;
-            var parentClips:Array = clips;
+            var parentClips:Vector.<Clip> = clips;
 			if (index >= parentClips.length) return null;
 			var clip:Clip = parentClips[index];
             _inStreamClip = null;
@@ -277,7 +282,7 @@ package org.flowplayer.model {
 		}
 
         private function positionOf(index:Number):Number {
-            var parentClips:Array = clips;
+            var parentClips:Vector.<Clip> = clips;
 			var clip:Clip = parentClips[index];
             return clip ? _clips.indexOf(clip.preroll || clip) : 0;            
         }
@@ -298,7 +303,7 @@ package org.flowplayer.model {
 		 * Does this playlist have a clip with the specified type?
 		 */
 		public function hasType(type:ClipType):Boolean {
-            var clips:Array = _clips.concat(childClips);
+            var clips:Vector.<Clip> = _clips.concat(childClips);
             for (var i:Number = 0; i < clips.length; i++) {
                 var clip:Clip = Clip(clips[i]);
 

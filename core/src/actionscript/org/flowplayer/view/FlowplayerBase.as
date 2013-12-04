@@ -619,7 +619,7 @@ package org.flowplayer.view {
          * @param playlist an array of Clip instances
          * @see ClipEventType#PLAYLIST_REPLACE
          */
-        public function setPlaylist(playlist:Array):void {
+        public function setPlaylist(playlist:Vector.<Clip>):void {
             _playListController.setPlaylist(playlist);
             log.debug("setPlaylist, currentIndex is " + this.playlist.currentIndex);
         }
@@ -646,7 +646,7 @@ package org.flowplayer.view {
          * @return
          * @see Clip
          */
-        public function createClips(clips:Array):Array {
+        public function createClips(clips:Array):Vector.<Clip> {
             return _config.createClips(clips);
         }
 

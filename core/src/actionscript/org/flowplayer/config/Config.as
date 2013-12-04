@@ -114,7 +114,7 @@ package org.flowplayer.config {
 			return _playlistBuilder.createCuepointGroup(cueObjects, callbackId, timeMultiplier);
 		}
 
-		public function createClips(playlist:Object = null):Array {
+		public function createClips(playlist:Object = null):Vector.<Clip> {
             return _playlistBuilder.createClips(playlist);
 		}
 

@@ -647,7 +647,7 @@ CONFIG::FLASH_10_1 {
         }
 
         private function get hasHttpChildClip():Boolean {
-            var children:Array = _config.getPlaylist().childClips;
+            var children:Vector.<Clip> = _config.getPlaylist().childClips;
 //            log.debug("configuration has child clips", children);
             for (var i:int = 0; i < children.length; i++) {
                 if (Clip(children[i]).provider == "httpInstream") {

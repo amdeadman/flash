@@ -83,7 +83,7 @@ package org.flowplayer.view {
 
         }
 
-        private function addEventListenerToDisplays(clips:Array, type:String, listener:Function):void {
+        private function addEventListenerToDisplays(clips:Vector.<Clip>, type:String, listener:Function):void {
             for (var i:Number = 0; i < clips.length; i++) {
                 var clip:Clip = clips[i];
                 if (! clip.isNullClip) {
@@ -93,7 +93,7 @@ package org.flowplayer.view {
             }
         }
 
-        private function createDisplays(clips:Array):void {
+        private function createDisplays(clips:Vector.<Clip>):void {
             for (var i:Number = 0; i < clips.length; i++) {
                 var clip:Clip = clips[i];
                 if (! clip.isNullClip) {
@@ -258,7 +258,7 @@ package org.flowplayer.view {
             createDisplay(clip);
         }
 
-        private function removeDisplays(clips:Array):void {
+        private function removeDisplays(clips:Vector.<Clip>):void {
             for (var i:Number = 0; i < clips.length; i++) {
                 removeChild(_displays[clips[i]]);
 				for(var key:Object in _removeDisplayListeners)
@@ -387,7 +387,7 @@ package org.flowplayer.view {
         }
 
         private function hideAllDisplays(except:Array = null):void {
-            var clips:Array = _playList.clips.concat(_playList.childClips);
+            var clips:Vector.<Clip> = _playList.clips.concat(_playList.childClips);
             for (var i:Number = 0; i < clips.length; i++) {
                 var clip:Clip = clips[i] as Clip;
                 var disp:MediaDisplay = _displays[clip];

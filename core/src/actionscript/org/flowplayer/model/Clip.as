@@ -143,7 +143,7 @@ package org.flowplayer.model {
 
         public function setParentPlaylist(playlist:Playlist):void {
             _playlist = playlist;
-            var children:Array = _childPlaylist.clips;
+            var children:Vector.<Clip> = _childPlaylist.clips;
             if (_preroll) {
                 children.push(_preroll);
             }
@@ -880,10 +880,11 @@ package org.flowplayer.model {
         }
 
         [Value]
-        public function get playlist():Array {
-            var result:Array = _childPlaylist.clips;
+        public function get playlist():Vector.<Clip> {
+            var result:Vector.<Clip> = _childPlaylist.clips;
             if (_preroll) {
-                result = [_preroll].concat(result);
+                result = new <Clip>[_preroll].concat(result);
+                //result = [_preroll].concat(result);
             }
             if (_postroll) {
                 result.push(_postroll);

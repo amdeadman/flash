@@ -23,24 +23,24 @@ package org.flowplayer.model {
 	 * @author api
 	 */
 	public class ClipEventSupport extends ClipEventDispatcher {
-		private var _clips:Array;
+		protected var _clips:Vector.<Clip>;
 		private var _commonClip:Clip;
 
-		public function ClipEventSupport(commonClip:Clip, clips:Array = null) {
+		public function ClipEventSupport(commonClip:Clip, clips:Vector.<Clip> = null) {
 			_commonClip = commonClip;
 			_clips = clips;
 		}
 		
-		flow_internal function setClips(clips:Array):void {
+		flow_internal function setClips(clips:Vector.<Clip>):void {
 			_clips = clips;
 		}
 
-        flow_internal function get allClips():Array {
+        flow_internal function get allClips():Vector.<Clip> {
             return _clips;
         }
 
-        public function get clips():Array {
-			return _clips.filter(function (item:*, index:int, array:Array):Boolean {
+        public function get clips():Vector.<Clip> {
+			return _clips.filter(function (item:*, index:int, array:Vector.<Clip>):Boolean {
                 return ! Clip(item).isInStream;
             });
 		}
@@ -67,8 +67,8 @@ package org.flowplayer.model {
 			}
 		}
 
-        public function get childClips():Array {
-            var result:Array = new Array();
+        public function get childClips():Vector.<Clip> {
+            var result:Vector.<Clip> = new Vector.<Clip>();
             for (var i:int = 0; i < _clips.length; i++) {
                 result = result.concat(Clip(_clips[i]).playlist);
             }
